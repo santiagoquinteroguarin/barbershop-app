@@ -12,12 +12,32 @@ function startApp() {
 
     // oculta o muestra una sección según el tab al que se presiona
     changeSection();
+
+    // paginación siguiente y anterior
+    nextPage();
+    
+    previousPage();
+
+    // Comprueba la pagina actual para ocultar o mostrar la paginación
+    pagerButtons();
 }
 
 function showSection() {
+    // eliminar show-section de la section anterior
+    const previousSection = document.querySelector('.show-section');
+    if(previousSection) {
+        previousSection.classList.remove('show-section');
+    }
+
     const currentSection = document.querySelector(`#step-${page}`);
     currentSection.classList.add('show-section');
 
+    const previousTab = document.querySelector('.tabs .current');
+    if(previousTab) {
+        // Eliminar la clase de current en el anterior
+        previousTab.classList.remove('current');
+    }
+    
     // resalta el tab actual
     const tab = document.querySelector(`[data-step="${page}"]`);
     tab.classList.add('current');
@@ -30,19 +50,10 @@ function changeSection() {
             e.preventDefault();
             page = parseInt(e.target.dataset.step);
 
-            // eliminar show-section de la section anterior
-            document.querySelector('.show-section').classList.remove('show-section');
+            // llamar la funcion de mostrar la seccion
+            showSection();
 
-            // agrega mostrar seccion donde dimos click
-            const section = document.querySelector(`#step-${page}`);
-            section.classList.add('show-section');
-
-            // Eliminar la clase de current en el anterior
-            document.querySelector('.tabs .current').classList.remove('current');
-
-            // agregar la clase de actual en el nuevo tab
-            const tab = document.querySelector(`[data-step="${page}"]`);
-            tab.classList.add('current');
+            pagerButtons();
         })
     })
 }
@@ -103,3 +114,40 @@ function selectService(e) {
         element.classList.add('selected');
     }
 }
+
+function nextPage() {
+    const nextPage = document.querySelector('#next');
+    nextPage.addEventListener('click', () => {
+        page++;
+        // volver a comprobar en que pagina esta el paginador
+        pagerButtons();
+    });
+}
+
+function previousPage() {
+    const previousPage = document.querySelector('#previous');
+    previousPage.addEventListener('click', () => {
+        page--;
+        // volver a comprobar en que pagina esta el paginador
+        pagerButtons();
+    });
+}
+
+function pagerButtons() {
+    const nextPage = document.querySelector('#next');
+    const previousPage = document.querySelector('#previous');
+
+    if(page === 1) {
+        previousPage.classList.add('hide')
+    } else if(page === 3) {
+        nextPage.classList.add('hide');
+        previousPage.classList.remove('hide');
+    } else {
+        previousPage.classList.remove('hide');
+        nextPage.classList.remove('hide');
+    }
+
+    // cambiar la seccion por la de la pagina
+    showSection();
+}
+

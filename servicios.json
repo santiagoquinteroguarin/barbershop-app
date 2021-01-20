@@ -27,28 +27,8 @@
         },
         {
             "id": 6,
-            "name": "Peinado Mujer",
-            "price": 100
-        },
-        {
-            "id": 7,
-            "name": "Tinte",
-            "price": 300
-        },
-        {
-            "id": 8,
-            "name": "Uñas",
-            "price": 400
-        },
-        {
-            "id": 9,
-            "name": "Lavado de Cabello",
-            "price": 50
-        },
-        {
-            "id": 10,
-            "name" : "Tratamiento Capilar",
-            "price": 150
+            "name": "limpieza Facial",
+            "price": 30
         }
     ]
 }
