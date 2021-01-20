@@ -1,54 +1,54 @@
 {
-    "servicios": [
+    "services": [
         {
             "id": 1,
-            "nombre": "Corte de Cabello Adulto",
-            "precio": 80
+            "name": "Corte de Cabello Adulto",
+            "price": 80
         },
         {
             "id": 2,
-            "nombre": "Corte de Cabello Niño",
-            "precio": 60
+            "name": "Corte de Cabello Niño",
+            "price": 60
         },
         {
             "id": 3,
-            "nombre": "Corte de Cabello Mujer",
-            "precio": 100
+            "name": "Corte de Cabello Mujer",
+            "price": 100
         },
         {
             "id": 4,
-            "nombre": "Corte de Barba",
-            "precio": 100
+            "name": "Corte de Barba",
+            "price": 100
         },
         {
             "id": 5,
-            "nombre": "Peinado Hombre",
-            "precio": 60
+            "name": "Peinado Hombre",
+            "price": 60
         },
         {
             "id": 6,
-            "nombre": "Peinado Mujer",
-            "precio": 100
+            "name": "Peinado Mujer",
+            "price": 100
         },
         {
             "id": 7,
-            "nombre": "Tinte",
-            "precio": 300
+            "name": "Tinte",
+            "price": 300
         },
         {
             "id": 8,
-            "nombre": "Uñas",
-            "precio": 400
+            "name": "Uñas",
+            "price": 400
         },
         {
             "id": 9,
-            "nombre": "Lavado de Cabello",
-            "precio": 50
+            "name": "Lavado de Cabello",
+            "price": 50
         },
         {
             "id": 10,
-            "nombre" : "Tratamiento Capilar",
-            "precio": 150
+            "name" : "Tratamiento Capilar",
+            "price": 150
         }
     ]
 }
