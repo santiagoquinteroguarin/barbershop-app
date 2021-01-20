@@ -1,9 +1,50 @@
+let page = 1;
+
 document.addEventListener('DOMContentLoaded', function() {
     startApp();
 });
 
 function startApp() {
     showServices();
+
+    // Resalta el DIV actual según el tab al que se presiona
+    showSection();
+
+    // oculta o muestra una sección según el tab al que se presiona
+    changeSection();
+}
+
+function showSection() {
+    const currentSection = document.querySelector(`#step-${page}`);
+    currentSection.classList.add('show-section');
+
+    // resalta el tab actual
+    const tab = document.querySelector(`[data-step="${page}"]`);
+    tab.classList.add('current');
+}
+
+function changeSection() {
+    const links = document.querySelectorAll('.tabs button');
+    links.forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            page = parseInt(e.target.dataset.step);
+
+            // eliminar show-section de la section anterior
+            document.querySelector('.show-section').classList.remove('show-section');
+
+            // agrega mostrar seccion donde dimos click
+            const section = document.querySelector(`#step-${page}`);
+            section.classList.add('show-section');
+
+            // Eliminar la clase de current en el anterior
+            document.querySelector('.tabs .current').classList.remove('current');
+
+            // agregar la clase de actual en el nuevo tab
+            const tab = document.querySelector(`[data-step="${page}"]`);
+            tab.classList.add('current');
+        })
+    })
 }
 
 async function showServices() {

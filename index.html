@@ -16,21 +16,21 @@
                 <h1>Barbershop</h1>
             </header>
             <nav class="tabs">
-                <button type="button">Servicios</button>
-                <button type="button">Información Cliente</button>
-                <button type="button">Resumen</button>
+                <button data-step="1" type="button">Servicios</button>
+                <button data-step="2" type="button">Información Cliente</button>
+                <button data-step="3" type="button">Resumen</button>
             </nav>
 
             <!-- Inicia contenido app -->
-            <div class="section">
+            <div id="step-1" class="section">
                 <h2>Servicios</h2>
                 <p class="text-center">Elige tus Servicios a Continuación</p>
                 <div id="services" class="list-of-services"></div>
             </div>
-            <div class="section">
+            <div id="step-2" class="section">
                 <h2>Tus Datos y Citas</h2>
             </div>
-            <div class="section">
+            <div id="step-3" class="section">
                 <h2>Resumen</h2>
             </div>
         </div>

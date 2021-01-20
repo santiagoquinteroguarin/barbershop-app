@@ -29,9 +29,9 @@ body {
     .section {
         display: none;
         margin-top: $separacion / 2;
-
-        &:first-of-type {
-            display: block;
-        }
     }
+}
+
+.show-section {
+    display: block !important;
 }
