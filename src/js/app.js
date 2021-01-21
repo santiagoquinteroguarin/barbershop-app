@@ -243,6 +243,8 @@ function showSummary() {
 
     servicesAppointment.appendChild(headingServices);
 
+    let amount = 0; 
+
     // iterar sobre el arreglo de servicios
     services.forEach(service => {
         const { name, price } = service;
@@ -256,6 +258,10 @@ function showSummary() {
         priceService.classList.add('price');
         priceService.textContent = price;
 
+        // calculando el total a pagar
+        const totalService = price.split('$');
+        amount += parseInt(totalService[1].trim());
+
         // colocar precio y texto en el div
         containerService.appendChild(textService);
         containerService.appendChild(priceService);
@@ -268,6 +274,12 @@ function showSummary() {
     summaryDiv.appendChild(dateAppointment);
     summaryDiv.appendChild(timeAppointment);
     summaryDiv.appendChild(servicesAppointment);
+
+    const totalToPay = document.createElement('P');
+    totalToPay.classList.add('total');
+    totalToPay.innerHTML = `<span>Total a Pagar: </span> $ ${amount}`;
+
+    summaryDiv.appendChild(totalToPay);
 }
 
 function nameAppointment() {
