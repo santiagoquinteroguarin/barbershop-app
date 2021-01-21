@@ -39,6 +39,9 @@ function startApp() {
 
     // deshabilita días pasados
     disablePreviousDay();
+
+    // Almacena la hora de la cita en el objeto
+    timeAppointment();
 }
 
 function showSection() {
@@ -184,6 +187,8 @@ function pagerButtons() {
     } else if(page === 3) {
         nextPage.classList.add('hide');
         previousPage.classList.remove('hide');
+        // carga el resumen de la cita
+        showSummary();
     } else {
         previousPage.classList.remove('hide');
         nextPage.classList.remove('hide');
@@ -199,6 +204,11 @@ function showSummary() {
     // seleccionar resumen
     const summaryDiv = document.querySelector('.summary-content');
 
+    // limpia el HTML previo
+    while(summaryDiv.firstChild) {
+        summaryDiv.removeChild(summaryDiv.firstChild);
+    }
+
     // validación para saber que los campos estan vacios
     if(Object.values(cita).includes('')) {
         const noServices = document.createElement('p');
@@ -207,7 +217,23 @@ function showSummary() {
         
         // agregar a resumen div
         summaryDiv.appendChild(noServices);
+
+        return;
     }
+
+    // mostrar el resumen
+    const nameAppointment = document.createElement('p');
+    nameAppointment.innerHTML = `<span>Nombre:</span> ${name}`;
+
+    const dateAppointment = document.createElement('p');
+    dateAppointment.innerHTML = `<span>Fecha:</span> ${date}`;
+
+    const timeAppointment = document.createElement('p');
+    timeAppointment.innerHTML = `<span>Nombre:</span> ${time}`;
+
+    summaryDiv.appendChild(nameAppointment);
+    summaryDiv.appendChild(dateAppointment);
+    summaryDiv.appendChild(timeAppointment);
 }
 
 function nameAppointment() {
@@ -287,4 +313,21 @@ function disablePreviousDay() {
     // formato AAAA-MM-DD
     const disableDate = `${year}-${month}-${day}`;
     inputDate.min = disableDate;
+}
+
+function timeAppointment() {
+    const timeInput = document.querySelector('#time');
+    timeInput.addEventListener('input', e => {
+        const timeAppointment = e.target.value;
+        const hour = timeAppointment.split(':');
+
+        if(hour[0] < 10 || hour[0] > 19) {
+            showAlert('Hora no válida', 'error');
+            setTimeout(() => {
+                timeInput.value = '';
+            }, 3000);
+        } else {
+            cita.time = timeAppointment;
+        }
+    });
 }
