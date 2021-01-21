@@ -33,6 +33,12 @@ function startApp() {
 
     // almacena el nombre de la cita en el objeto
     nameAppointment();
+
+    // alamcena la fecha de la cita en el objeto
+    dateAppointment();
+
+    // deshabilita días pasados
+    disablePreviousDay();
 }
 
 function showSection() {
@@ -223,6 +229,23 @@ function nameAppointment() {
     });
 }
 
+function dateAppointment() {
+    const dateInput = document.querySelector('#date');
+
+    dateInput.addEventListener('input', (e) => {
+        const day = new Date(e.target.value).getUTCDay();
+        
+        // validacion de que nombre texto debe tener algo
+        if([1, 0].includes(day)) {
+            e.preventDefault();
+            dateInput.value = '';
+            showAlert('Seleccionaste lunes lo cual no es valido', 'error');
+        } else {
+            cita.date = dateInput.value;
+        }
+    });
+}
+
 function showAlert(message, type) {
 
     // Si hay una alerta previa no crear otra
@@ -247,4 +270,21 @@ function showAlert(message, type) {
     setTimeout(() => {
         alert.remove();
     }, 3000);
+}
+
+function disablePreviousDay() {
+    const inputDate = document.querySelector('#date');
+
+    const nowDate = new Date();
+    const year = nowDate.getFullYear();
+    let month = nowDate.getMonth() + 1;
+    const day = nowDate.getDate() + 1;
+
+    if(month >= 1 && month < 9) {
+        month = `0${month}`;
+    }
+
+    // formato AAAA-MM-DD
+    const disableDate = `${year}-${month}-${day}`;
+    inputDate.min = disableDate;
 }
