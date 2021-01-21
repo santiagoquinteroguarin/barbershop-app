@@ -1,5 +1,12 @@
 let page = 1;
 
+const cita = {
+    name: '',
+    date: '',
+    time: '',
+    services: [],
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     startApp();
 });
@@ -20,6 +27,12 @@ function startApp() {
 
     // Comprueba la pagina actual para ocultar o mostrar la paginación
     pagerButtons();
+
+    // muestra el resumen de la cita o mensaje de error
+    showSummary();
+
+    // almacena el nombre de la cita en el objeto
+    nameAppointment();
 }
 
 function showSection() {
@@ -110,9 +123,32 @@ function selectService(e) {
     // cuando seleccionen un servicio añadirle la clase seleccionado
     if(element.classList.contains('selected')) {
         element.classList.remove('selected');
+
+        const id = parseInt(element.dataset.serviceId);
+        // eliminar servicio
+        deleteService(id);
     } else {
         element.classList.add('selected');
+
+        const serviceObj = {
+            id: parseInt(element.dataset.serviceId),
+            name: element.firstElementChild.textContent,
+            price: element.firstElementChild.nextElementSibling.textContent,
+        }
+        // agregar servicio
+        addService(serviceObj);
     }
+}
+
+function deleteService() {
+    const { services } = cita;
+    cita.services = services.filter(service => service.id !== id);
+}
+
+function addService(serviceObj) {
+    const { services } = cita;
+
+    cita.services = [...services, serviceObj];
 }
 
 function nextPage() {
@@ -151,3 +187,64 @@ function pagerButtons() {
     showSection();
 }
 
+function showSummary() {
+    const { name, date, time, services } = cita;
+
+    // seleccionar resumen
+    const summaryDiv = document.querySelector('.summary-content');
+
+    // validación para saber que los campos estan vacios
+    if(Object.values(cita).includes('')) {
+        const noServices = document.createElement('p');
+        noServices.textContent = 'Faltan datos de servicios, hora, fecha o nombre';
+        noServices.classList.add('invalid-appointment');
+        
+        // agregar a resumen div
+        summaryDiv.appendChild(noServices);
+    }
+}
+
+function nameAppointment() {
+    const nameInput = document.querySelector('#name');
+
+    nameInput.addEventListener('input', (e) => {
+        const nameText = e.target.value.trim();
+
+        // validacion de que nombre texto debe tener algo
+        if(nameText === '' || nameText.length < 2) {
+            showAlert('Nombre no valído', 'error');
+        } else {
+            const alert = document.querySelector('.alert');
+            if(alert) {
+                alert.remove();
+            }
+            cita.name = nameText;
+        }
+    });
+}
+
+function showAlert(message, type) {
+
+    // Si hay una alerta previa no crear otra
+    const alertPrevious = document.querySelector('.alert');
+    if(alertPrevious) {
+        return;
+    }
+
+    const alert = document.createElement('div');
+    alert.textContent = message;
+    alert.classList.add('alert');
+
+    if(type === 'error') {
+        alert.classList.add('error');
+    }
+
+    // insertar en el HTML
+    const form = document.querySelector('form');
+    form.appendChild(alert);
+
+    // Eliminar la alerta despues de 3 seg
+    setTimeout(() => {
+        alert.remove();
+    }, 3000);
+}

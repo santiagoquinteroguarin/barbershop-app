@@ -20,3 +20,15 @@
         outline: none;
     }
 }
+
+.alert {
+    padding: $separacion / 2;
+    text-align: center;
+    color: $white;
+    width: 100%;
+    display: block;
+
+    &.error {
+        background-color: rgb(194, 0, 0);
+    }
+}
