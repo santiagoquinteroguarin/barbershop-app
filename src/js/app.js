@@ -92,16 +92,16 @@ async function showServices() {
 
             // DOM Scripting
             // Generar nombre del servicio
-            const serviceName = document.createElement('p');
+            const serviceName = document.createElement('P');
             serviceName.textContent = name;
             serviceName.classList.add('service-name');
             // Generar precio del servicio
-            const servicePrice = document.createElement('p');
+            const servicePrice = document.createElement('P');
             servicePrice.textContent = `$ ${price}`;
             servicePrice.classList.add('service-price');
 
             // Generar div contenedor del servicio
-            const serviceDiv = document.createElement('div');
+            const serviceDiv = document.createElement('DIV');
             serviceDiv.classList.add('service');
 
             // inyectar precio y nombre al div del servicio
@@ -211,7 +211,7 @@ function showSummary() {
 
     // validación para saber que los campos estan vacios
     if(Object.values(cita).includes('')) {
-        const noServices = document.createElement('p');
+        const noServices = document.createElement('P');
         noServices.textContent = 'Faltan datos de servicios, hora, fecha o nombre';
         noServices.classList.add('invalid-appointment');
         
@@ -221,19 +221,53 @@ function showSummary() {
         return;
     }
 
+    const headingAppointment = document.createElement('H3');
+    headingAppointment.textContent = 'Resumen de Cita';
+
     // mostrar el resumen
-    const nameAppointment = document.createElement('p');
+    const nameAppointment = document.createElement('P');
     nameAppointment.innerHTML = `<span>Nombre:</span> ${name}`;
 
-    const dateAppointment = document.createElement('p');
+    const dateAppointment = document.createElement('P');
     dateAppointment.innerHTML = `<span>Fecha:</span> ${date}`;
 
-    const timeAppointment = document.createElement('p');
+    const timeAppointment = document.createElement('P');
     timeAppointment.innerHTML = `<span>Nombre:</span> ${time}`;
 
+    const servicesAppointment = document.createElement('DIV');
+    servicesAppointment.classList.add('summary-services');
+
+    // creando titulo
+    const headingServices = document.createElement('H3');
+    headingServices.textContent = 'Resumen de Servicios';
+
+    servicesAppointment.appendChild(headingServices);
+
+    // iterar sobre el arreglo de servicios
+    services.forEach(service => {
+        const { name, price } = service;
+        const containerService = document.createElement('DIV');
+        containerService.classList.add('container-service');
+
+        const textService = document.createElement('P');
+        textService.textContent = name;
+
+        const priceService = document.createElement('P');
+        priceService.classList.add('price');
+        priceService.textContent = price;
+
+        // colocar precio y texto en el div
+        containerService.appendChild(textService);
+        containerService.appendChild(priceService);
+
+        servicesAppointment.appendChild(containerService);
+    });
+
+    summaryDiv.appendChild(headingAppointment);
     summaryDiv.appendChild(nameAppointment);
     summaryDiv.appendChild(dateAppointment);
     summaryDiv.appendChild(timeAppointment);
+    summaryDiv.appendChild(servicesAppointment);
 }
 
 function nameAppointment() {
@@ -316,7 +350,8 @@ function disablePreviousDay() {
 }
 
 function timeAppointment() {
-    const timeInput = document.querySelector('#time');
+    const timeInput = document.querySelector('#hour');
+
     timeInput.addEventListener('input', e => {
         const timeAppointment = e.target.value;
         const hour = timeAppointment.split(':');
